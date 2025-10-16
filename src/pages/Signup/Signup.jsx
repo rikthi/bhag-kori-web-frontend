@@ -4,8 +4,11 @@ import './Signup.css';
 import DotGrid from '../DotGrid';
 import Logo from '../../components/Logo/Logo';
 import { Link } from 'react-router-dom';
+import { API_BASE_URL } from '../../config'
 
 const Signup = () => {
+
+
     return (
         <div className="page-wrapper">
             <Logo />
