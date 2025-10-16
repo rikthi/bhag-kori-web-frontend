@@ -84,14 +84,14 @@ body {
 }
 
 .auth-form h2 {
-    color: #000000; /* Explicitly set to black */
+    color: #000000 !important; /* Explicitly set to black */
     margin-bottom: 1rem;
     font-weight: 600;
     font-size: 2rem;
 }
 
 .auth-form p {
-    color: #555555; /* Explicitly set to dark grey */
+    color: #555555 !important; /* Explicitly set to dark grey */
     margin-bottom: 2rem;
 }
 
@@ -104,7 +104,7 @@ body {
 .input-group label {
     display: block;
     margin-bottom: 0.5rem;
-    color: #555555; /* Explicitly set to dark grey */
+    color: #555555 !important; /* Explicitly set to dark grey */
     font-weight: 400;
     font-size: 0.9rem;
 }
@@ -117,7 +117,7 @@ body {
     box-sizing: border-box;
     background-color: #fdfdff;
     transition: all 0.3s ease;
-    color: #000000; /* Black text color for input */
+    color: #000000 !important; /* Black text color for input */
 }
 
 .input-group input:focus {
@@ -149,4 +149,35 @@ button:hover {
 button:active {
     transform: translateY(-1px);
     box-shadow: 0 4px 10px rgba(142, 130, 255, 0.4);
+}
+
+.error-message {
+    background-color: #ffebee; /* Light red background */
+    color: #e74c3c; /* Dark red text */
+    border: 1px solid #e74c3c;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    animation: fadeInError 0.3s ease-out;
+}
+
+.error-icon {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+@keyframes fadeInError {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

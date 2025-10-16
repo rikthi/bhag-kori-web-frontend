@@ -4,6 +4,7 @@ import Signup from './pages/Signup/Signup';
 import Login from './pages/Login/Login';
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
 import Homepage from './pages/Homepage/Homepage';
+import CreateGroup from './pages/CreateGroup/CreateGroup';
 
 function App() {
     return (
@@ -14,6 +15,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/homepage" element={<Homepage />} />
+                <Route path="/create-group" element={<CreateGroup />} />
             </Routes>
         </Router>
     );
