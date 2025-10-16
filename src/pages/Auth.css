@@ -14,7 +14,7 @@ body {
     font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
-    color: var(--text-color);
+    color: #000000; /* Explicitly set body text to black */
     background-color: #1a1a2e; /* Darker background */
     display: flex;
     justify-content: center;
@@ -84,15 +84,15 @@ body {
 }
 
 .auth-form h2 {
-    color: var(--text-color);
+    color: #000000; /* Explicitly set to black */
     margin-bottom: 1rem;
     font-weight: 600;
     font-size: 2rem;
 }
 
 .auth-form p {
+    color: #555555; /* Explicitly set to dark grey */
     margin-bottom: 2rem;
-    color: var(--light-text-color);
 }
 
 .input-group {
@@ -104,7 +104,7 @@ body {
 .input-group label {
     display: block;
     margin-bottom: 0.5rem;
-    color: var(--light-text-color);
+    color: #555555; /* Explicitly set to dark grey */
     font-weight: 400;
     font-size: 0.9rem;
 }
