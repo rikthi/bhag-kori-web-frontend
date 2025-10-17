@@ -10,7 +10,7 @@ const Homepage = () => {
 
     const features = [
         { title: 'Create a Group', description: 'Start a new group for your activities.', path: '/create-group' },
-        { title: 'View Groups', description: 'See all the groups you are a part of.', path: '#' },
+        { title: 'View Groups', description: 'See all the groups you are a part of.', path: '/view-groups' },
         { title: 'Request Payment', description: 'Request payment from your friends.', path: '#' },
         { title: 'View Activity', description: 'Check your recent activities.', path: '#' },
         { title: 'Friends', description: 'Manage your friends list.', path: '#' }
