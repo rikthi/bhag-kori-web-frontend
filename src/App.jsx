@@ -6,6 +6,7 @@ import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
 import Homepage from './pages/Homepage/Homepage';
 import CreateGroup from './pages/CreateGroup/CreateGroup';
 import ViewGroups from './pages/ViewGroups/ViewGroups';
+import GroupPage from './pages/GroupPage/GroupPage';
 
 function App() {
     return (
@@ -18,6 +19,7 @@ function App() {
                 <Route path="/homepage" element={<Homepage />} />
                 <Route path="/create-group" element={<CreateGroup />} />
                 <Route path="/view-groups" element={<ViewGroups />} />
+                <Route path="/group/:roomId" element={<GroupPage />} />
             </Routes>
         </Router>
     );

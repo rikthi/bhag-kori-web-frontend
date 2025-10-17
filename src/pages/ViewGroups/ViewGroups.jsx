@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { UserContext } from '../../context/UserContext';
 import Logo from '../../components/Logo/Logo';
@@ -15,6 +16,7 @@ const ViewGroups = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const { user } = useContext(UserContext);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchGroups = async () => {
@@ -61,6 +63,10 @@ const ViewGroups = () => {
         );
         setFilteredGroups(filtered);
     }, [searchTerm, groups]);
+
+    const handleGroupClick = (groupId) => {
+        navigate(`/group/${groupId}`);
+    };
 
     if (loading) {
         return (
@@ -125,7 +131,7 @@ const ViewGroups = () => {
                 ) : (
                     <div className="groups-grid">
                         {filteredGroups.map((group) => (
-                            <div key={group.id} className="group-card">
+                            <div key={group.id} className="group-card" onClick={() => handleGroupClick(group.id)}>
                                 <h3>{group.name}</h3>
                                 <p className="group-description">{group.description}</p>
                                 {group.totalAmount !== null && (
