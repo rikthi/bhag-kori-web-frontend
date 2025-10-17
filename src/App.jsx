@@ -15,7 +15,6 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/homepage" element={<Homepage />} />
-                <Route path="/create-group" element={<CreateGroup />} />
             </Routes>
         </Router>
     );
