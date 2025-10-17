@@ -60,9 +60,9 @@ export default function PaymentModal({ roomId, userId, onClose, onCreated }) {
   return (
     <div className="payment-modal-overlay" onMouseDown={onClose}>
       <div className="payment-modal" onMouseDown={(e) => e.stopPropagation()}>
-        <div className="pm-header">
+      <div className="modal-header">
           <h3>Make Payment</h3>
-          <button className="pm-close" onClick={onClose}>✖</button>
+          <button className="modal-close" onClick={onClose} aria-label="Close">✖</button>
         </div>
 
         <div className="pm-body">
@@ -71,11 +71,13 @@ export default function PaymentModal({ roomId, userId, onClose, onCreated }) {
             {loadingMembers ? (
               <div className="pm-loading">Loading members...</div>
             ) : (
-              <select value={selectedPayee || ''} onChange={(e) => setSelectedPayee(e.target.value)}>
+<select value={selectedPayee || ''} onChange={(e) => setSelectedPayee(e.target.value)}>
                 <option value="">Select a member</option>
-                {members.map((m) => (
-                  <option key={m.id} value={m.id}>{m.name}</option>
-                ))}
+                {members
+                  .filter((m) => Number(m.id) !== Number(userId))
+                  .map((m) => (
+                    <option key={m.id} value={m.id}>{m.name}</option>
+                  ))}
               </select>
             )}
           </label>

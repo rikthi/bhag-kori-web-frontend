@@ -1,4 +1,4 @@
-/* Payment modal - matches ExpenseModal style but simpler */
+/* Payment modal - matches ExpenseModal style but simpler and with consistent header/dropdown styling */
 
 .payment-modal-overlay {
   position: fixed;
@@ -21,27 +21,48 @@
   color: #fff;
   display: flex;
   flex-direction: column;
+  position: relative; /* important so .modal-close absolute positions correctly */
 }
 
-.pm-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: 8px;
+/* Align close button and header like ExpenseModal */
+.modal-header {
+  padding: 8px 52px 8px 16px; /* leave space for close button */
   border-bottom: 1px solid rgba(255,255,255,0.03);
 }
-.pm-header h3 { margin: 0; font-size: 1.15rem; color: var(--primary-color); }
-
-.pm-close {
-  background: rgba(255,255,255,0.02);
-  border: 1px solid rgba(255,255,255,0.03);
-  color: rgba(255,255,255,0.9);
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
-  cursor: pointer;
+.modal-header h3 {
+  margin: 0;
+  font-size: 1.15rem;
+  color: #f5f5ff;
+  letter-spacing: 0.2px;
+  font-weight: 600;
 }
 
+/* Reuse the same modal-close style so button lines up identical to ExpenseModal */
+.modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.015);
+  border: 1px solid rgba(255,255,255,0.03);
+  color: rgba(255,255,255,0.88);
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 140ms ease, background 140ms ease, opacity 120ms ease;
+  opacity: 0.9;
+}
+.modal-close:hover {
+  transform: scale(1.1);
+  background: rgba(255,255,255,0.03);
+  opacity: 1;
+}
+
+/* Body */
 .pm-body {
   padding-top: 14px;
   display: flex;
@@ -66,6 +87,28 @@
   box-shadow: inset 0 -6px 12px rgba(0,0,0,0.35);
 }
 
+/* Dropdown caret */
+.pm-field select {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, rgba(255,255,255,0.4) 50%),
+                    linear-gradient(135deg, rgba(255,255,255,0.4) 50%, transparent 50%);
+  background-position: calc(100% - 20px) calc(1em + 6px), calc(100% - 14px) calc(1em + 6px);
+  background-size: 7px 7px, 7px 7px;
+  background-repeat: no-repeat;
+  padding-right: 44px;
+}
+
+/* Dropdown options styling (match ExpenseModal) */
+.pm-field select option {
+  background-color: rgba(18,17,35,0.98);
+  color: #fff;
+  padding: 10px;
+}
+.pm-field select option:hover {
+  background-color: rgba(142,130,255,0.2);
+}
+
+/* loading */
 .pm-loading { color: rgba(255,255,255,0.7); }
 
 /* error */

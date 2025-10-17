@@ -20,7 +20,7 @@ import {
  * The graph shows the user's share (positive = paid, negative = borrowed) over the most recent expenses.
  * It renders two stacked areas: positive values (green) and negative values (red).
  */
-export default function ExpenseGraph({ expenses = [], userId }) {
+export default function ExpenseGraph({ expenses = [], title = 'Expense Graph', sub = 'Paid (green) vs Borrowed (red)' }) {
   // Prepare data: take most recent 20 expenses sorted oldest->newest for the timeline
   const data = useMemo(() => {
     if (!Array.isArray(expenses) || expenses.length === 0) return [];
@@ -54,8 +54,8 @@ export default function ExpenseGraph({ expenses = [], userId }) {
   return (
     <div className="expense-graph-wrapper">
       <div className="graph-header">
-        <div className="graph-title">Recent activity</div>
-        <div className="graph-sub">Paid (green) vs Borrowed (red)</div>
+        <div className="graph-title">{title}</div>
+        <div className="graph-sub">{sub}</div>
       </div>
 
       <ResponsiveContainer width="100%" height={220}>

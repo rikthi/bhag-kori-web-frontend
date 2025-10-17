@@ -27,6 +27,7 @@ export default function GroupPage() {
   const [showModal, setShowModal] = useState(false);
   const [detailExpense, setDetailExpense] = useState(null);
   const [members, setMembers] = useState([]);
+  const [payments, setPayments] = useState([]);
   const [activities, setActivities] = useState([]);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
 
@@ -91,6 +92,9 @@ export default function GroupPage() {
           console.error('payments fetch error', e);
           paymentsList = [];
         }
+
+        // save payments to state so other UI can use them
+        setPayments(paymentsList);
 
         // Build unified activity list: expenses (type EXPENSE) and payments (type PAYMENT)
         const mappedExpenses = expensesWithShares.map((exp) => ({
@@ -293,7 +297,13 @@ export default function GroupPage() {
           </div>
         </div>
         <div className="graph-panel">
-          <ExpenseGraph expenses={expenses} userId={user?.id} />
+          <ExpenseGraph expenses={expenses} userId={user?.id} title="Expense Graph" sub="Per-expense shares (paid vs borrowed)" />
+          <ExpenseGraph
+            expenses={payments.map((p) => ({ id: `p-${p.id}`, createTime: p.paymentTime, userShare: Number(p.amount) }))}
+            userId={user?.id}
+            title="Payment Graph"
+            sub="Payments over time"
+          />
         </div>
       </div>
 
