@@ -1,0 +1,50 @@
+.expense-graph-wrapper {
+  background: rgba(255,255,255,0.01);
+  border: 1px solid rgba(255,255,255,0.03);
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+  color: #fff;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.graph-header {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.graph-title {
+  font-weight: 700;
+  color: var(--primary-color, #8e82ff);
+  font-size: 1rem;
+}
+
+.graph-sub {
+  color: rgba(255,255,255,0.65);
+  font-size: 0.85rem;
+}
+
+/* Placeholder when no data */
+.expense-graph-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+  color: rgba(255,255,255,0.65);
+}
+
+.graph-placeholder {
+  padding: 18px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.01);
+  border: 1px solid rgba(255,255,255,0.02);
+}
+
+/* Responsive behavior */
+@media (max-width: 1000px) {
+  .expense-graph-wrapper { display: none; } /* hide graph on small screens to save space */
+}

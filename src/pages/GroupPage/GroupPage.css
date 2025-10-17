@@ -15,11 +15,12 @@
 /* Layout container uses available viewport height so inner panels can grow/shrink */
 .group-page-content-wrapper {
   display: flex;
-  gap: 48px; /* bigger separation between expenses and summary */
+  gap: 32px;
   align-items: flex-start;
-  justify-content: center;
+  justify-content: space-between;
   width: 100%;
-  max-width: 1280px;
+  max-width: 1600px; /* use more real estate on large screens */
+  margin: 0 auto; /* center on wide screens */
   padding: 28px;
   box-sizing: border-box;
   position: relative;
@@ -31,7 +32,7 @@
 /* Left: group details + expenses (flex column, expenses grows) */
 .group-details-section {
   flex: 2;
-  min-width: 420px;
+  min-width: 520px; /* larger so content doesn't look cramped */
   background: var(--panel-bg);
   border: 1px solid var(--panel-border);
   border-radius: 14px;
@@ -45,7 +46,7 @@
 /* Right: summary, with vertical separator created via left border */
 .summary-section {
   flex: 1;
-  min-width: 320px;
+  min-width: 360px; /* slightly wider summary */
   background: var(--panel-bg);
   border: 1px solid var(--panel-border);
   border-radius: 14px;
@@ -404,8 +405,21 @@
   scrollbar-color: rgba(142,130,255,0.22) transparent;
 }
 
-/* Small screens */
+/* Graph panel (right column) */
+.graph-panel {
+  width: 420px;
+  min-width: 360px;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-left: 18px;
+}
+
+/* Hide graph on small screens to preserve layout */
 @media (max-width: 1000px) {
+  .graph-panel { display: none; }
+
   .group-page-content-wrapper {
     flex-direction: column;
     height: auto;

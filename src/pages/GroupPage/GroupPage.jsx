@@ -8,6 +8,9 @@ import Aurora from '../Aurora';
 import '../Auth.css';
 import './GroupPage.css';
 import ExpenseModal from './ExpenseModal';
+import ExpenseDetailModal from './ExpenseDetailModal';
+import ExpenseGraph from './ExpenseGraph';
+import PaymentModal from './PaymentModal';
 import { API_BASE_URL } from '../../config.js';
 
 export default function GroupPage() {
@@ -22,6 +25,10 @@ export default function GroupPage() {
   const [error, setError] = useState(null);
   const [reloadKey, setReloadKey] = useState(0);
   const [showModal, setShowModal] = useState(false);
+  const [detailExpense, setDetailExpense] = useState(null);
+  const [members, setMembers] = useState([]);
+  const [activities, setActivities] = useState([]);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
 
   useEffect(() => {
     if (!roomId) return;
@@ -39,6 +46,18 @@ export default function GroupPage() {
         // Group details
         const groupRes = await axios.get(`${API_BASE_URL}/api/v1/room/get/${roomId}`);
         setGroupDetails(groupRes.data);
+
+        // Members (used for payments display & mapping)
+        let membersList = [];
+        try {
+          const membersRes = await axios.get(`${API_BASE_URL}/api/v1/room/get/${roomId}/users`);
+          membersList = Array.isArray(membersRes.data) ? membersRes.data : [];
+          setMembers(membersList);
+        } catch (e) {
+          console.error('members fetch error', e);
+          membersList = [];
+          setMembers([]);
+        }
 
         // Expenses
         const expensesRes = await axios.get(`${API_BASE_URL}/api/v1/expense/get/room/${roomId}`);
@@ -62,6 +81,43 @@ export default function GroupPage() {
         // sort by createTime descending (newest first)
         expensesWithShares.sort((a, b) => new Date(b.createTime) - new Date(a.createTime));
         setExpenses(expensesWithShares);
+
+        // Payments
+        let paymentsList = [];
+        try {
+          const paymentsRes = await axios.get(`${API_BASE_URL}/api/v1/payment/get/room/${roomId}`);
+          paymentsList = Array.isArray(paymentsRes.data) ? paymentsRes.data : [];
+        } catch (e) {
+          console.error('payments fetch error', e);
+          paymentsList = [];
+        }
+
+        // Build unified activity list: expenses (type EXPENSE) and payments (type PAYMENT)
+        const mappedExpenses = expensesWithShares.map((exp) => ({
+          id: `expense-${exp.id}`,
+          type: 'EXPENSE',
+          name: exp.name,
+          amount: Number(exp.amount),
+          time: exp.createTime,
+          payerId: exp.payerId ?? exp.payerId,
+          raw: exp,
+        }));
+
+        const mappedPayments = paymentsList.map((p) => ({
+          id: `payment-${p.id}`,
+          type: 'PAYMENT',
+          payerId: p.payerId,
+          payeeId: p.payeeId,
+          amount: Number(p.amount),
+          time: p.paymentTime,
+          raw: p,
+        }));
+
+        const combined = [...mappedExpenses, ...mappedPayments].sort(
+          (a, b) => new Date(b.time) - new Date(a.time)
+        );
+
+        setActivities(combined);
 
         // Room total for user
         try {
@@ -148,20 +204,42 @@ export default function GroupPage() {
               </div>
 
               <div className="expenses-list-container">
-                <h3>Expenses</h3>
-                {expenses.length === 0 ? (
-                  <p className="no-expenses-message">No expenses recorded yet.</p>
+                <h3>Activity</h3>
+                {activities.length === 0 ? (
+                  <p className="no-expenses-message">No activity recorded yet.</p>
                 ) : (
                   <div className="expenses-grid">
-                    {expenses.map((expense) => (
-                      <div key={expense.id} className="expense-card">
-                        <p className="expense-name">{expense.name}</p>
-                        <p className="expense-date">{formatDateTime(expense.createTime)}</p>
-                        <p className={`expense-share ${expense.userShare < 0 ? 'borrowed' : 'paid'}`}>
-                          {expenseShareText(expense.userShare)}
-                        </p>
-                      </div>
-                    ))}
+                    {activities.map((act) => {
+                      if (act.type === 'EXPENSE') {
+                        return (
+                          <div
+                            key={act.id}
+                            className="expense-card"
+                            onClick={() => setDetailExpense(act.raw)}
+                            style={{ cursor: 'pointer' }}
+                          >
+                            <p className="expense-name">Expense — {act.name}</p>
+                            <p className="expense-date">{formatDateTime(act.time)}</p>
+                            <p className={`expense-share ${act.raw.userShare < 0 ? 'borrowed' : 'paid'}`}>
+                              {expenseShareText(act.raw.userShare)}
+                            </p>
+                          </div>
+                        );
+                      }
+
+                      // PAYMENT
+                      const payerName = members.find((m) => m.id === act.payerId)?.name || `User ${act.payerId}`;
+                      const payeeName = members.find((m) => m.id === act.payeeId)?.name || `User ${act.payeeId}`;
+                      return (
+                        <div key={act.id} className="expense-card" style={{ cursor: 'default' }}>
+                          <p className="expense-name">Payment</p>
+                          <p className="expense-date">{formatDateTime(act.time)}</p>
+                          <p className="expense-share paid">
+                            {`${payerName} paid ${payeeName}: $${act.amount.toFixed(2)}`}
+                          </p>
+                        </div>
+                      );
+                    })}
                   </div>
                 )}
               </div>
@@ -172,16 +250,27 @@ export default function GroupPage() {
         <div className="summary-section">
           <div className="summary-total">
             <h3>Overall Balance</h3>
-            {roomTotal === null ? (
-              <p className="total-amount-unavailable">Balance unavailable</p>
-            ) : Number(roomTotal) === 0 ? (
-              <p className="total-amount neutral">You have no balance</p>
-            ) : (
-              <p className={`total-amount ${roomTotal < 0 ? 'owe' : 'get'}`}>
-                {roomTotal < 0 ? `You owe: $${Math.abs(roomTotal).toFixed(2)}` : `You will get: $${Number(roomTotal).toFixed(2)}`}
-              </p>
-            )}
-          </div>
+                {roomTotal === null ? (
+                  <p className="total-amount-unavailable">Balance unavailable</p>
+                ) : Number(roomTotal) === 0 ? (
+                  <p className="total-amount neutral">You have no balance</p>
+                ) : (
+                  <p className={`total-amount ${roomTotal < 0 ? 'owe' : 'get'}`}>
+                    {roomTotal < 0 ? `You owe: $${Math.abs(roomTotal).toFixed(2)}` : `You will get: $${Number(roomTotal).toFixed(2)}`}
+                  </p>
+                )}
+
+                <button
+                  type="button"
+                  className="add-expense-button make-payment-button"
+                  onClick={() => setShowPaymentModal(true)}
+                  aria-label="Make payment"
+                  style={{ marginTop: 12 }}
+                >
+                  <span className="plus">＋</span>
+                  <span className="label">Make Payment</span>
+                </button>
+              </div>
 
           <div className="shares-list-container">
             <h3>Individual Shares</h3>
@@ -203,6 +292,9 @@ export default function GroupPage() {
             )}
           </div>
         </div>
+        <div className="graph-panel">
+          <ExpenseGraph expenses={expenses} userId={user?.id} />
+        </div>
       </div>
 
       {showModal && (
@@ -214,6 +306,25 @@ export default function GroupPage() {
             setShowModal(false);
             setReloadKey((k) => k + 1);
           }}
+        />
+      )}
+
+      {showPaymentModal && (
+        <PaymentModal
+          roomId={roomId}
+          userId={user?.id}
+          onClose={() => setShowPaymentModal(false)}
+          onCreated={() => {
+            setShowPaymentModal(false);
+            setReloadKey((k) => k + 1);
+          }}
+        />
+      )}
+
+      {detailExpense && (
+        <ExpenseDetailModal
+          expense={detailExpense}
+          onClose={() => setDetailExpense(null)}
         />
       )}
     </div>
