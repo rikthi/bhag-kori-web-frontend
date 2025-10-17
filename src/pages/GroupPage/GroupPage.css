@@ -131,6 +131,57 @@
   margin-top: 8px; /* Space below created date */
 }
 
+/* Add Member button (modern, sleek, animated) */
+.add-member-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(46,204,113,0.1), rgba(46,204,113,0.05)); /* Light green opaque */
+  border: 1px solid rgba(46,204,113,0.2);
+  color: var(--text-on-dark);
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: transform 260ms cubic-bezier(.2,.9,.2,1), box-shadow 260ms ease, background 200ms ease;
+  box-shadow: 0 4px 12px rgba(46,204,113,0.08);
+  backdrop-filter: blur(3px);
+  overflow: hidden;
+  position: relative;
+  align-self: flex-end;
+  margin-top: 8px;
+}
+
+.add-member-button .plus {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, rgba(46,204,113,1), rgba(60,220,120,0.95)); /* Green plus */
+  color: white;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 20px;
+  text-align: center;
+  transform-origin: center;
+  transition: transform 260ms ease;
+  box-shadow: 0 4px 12px rgba(46,204,113,0.2);
+}
+
+.add-member-button:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(46,204,113,0.16);
+  background: linear-gradient(90deg, rgba(46,204,113,0.15), rgba(46,204,113,0.08));
+}
+.add-member-button:hover .plus {
+  transform: translateY(-2px) scale(1.08) rotate(-10deg);
+}
+
+.add-member-button:active {
+  transform: translateY(-1px) scale(0.99);
+}
+
 /* small creative animated accent */
 .add-expense-button .plus {
   display: inline-block;
@@ -171,8 +222,87 @@
 
 /* smaller on mobile */
 @media (max-width: 700px) {
-  .add-expense-button { padding: 5px 8px; font-size: 0.8rem; }
-  .add-expense-button .plus { width: 16px; height: 16px; line-height: 16px; font-size: 11px; }
+  .add-expense-button, .add-member-button { padding: 5px 8px; font-size: 0.8rem; }
+  .add-expense-button .plus, .add-member-button .plus, .add-member-button-global .plus { width: 16px; height: 16px; line-height: 16px; font-size: 11px; }
+}
+
+/* Add Member button container for global positioning */
+.add-member-button-container-global {
+  position: absolute;
+  top: 20px;
+  right: 100px; /* Position to the left of the navigation button, with good distance */
+  z-index: 1000;
+}
+
+/* Global Add Member button styling (reusing .add-member-button styles) */
+.add-member-button-global {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(46,204,113,0.1), rgba(46,204,113,0.05)); /* Light green opaque */
+  border: 1px solid rgba(46,204,113,0.2);
+  color: var(--text-on-dark);
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: transform 260ms cubic-bezier(.2,.9,.2,1), box-shadow 260ms ease, background 200ms ease;
+  box-shadow: 0 4px 12px rgba(46,204,113,0.08);
+  backdrop-filter: blur(3px);
+  overflow: hidden;
+  position: relative; /* For the plus icon animation */
+}
+
+.add-member-button-global .plus {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, rgba(46,204,113,1), rgba(60,220,120,0.95)); /* Green plus */
+  color: white;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 20px;
+  text-align: center;
+  transform-origin: center;
+  transition: transform 260ms ease;
+  box-shadow: 0 4px 12px rgba(46,204,113,0.2);
+}
+
+.add-member-button-global .label {
+  color: var(--muted);
+  opacity: 0.9;
+}
+
+.add-member-button-global:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(46,204,113,0.16);
+  background: linear-gradient(90deg, rgba(46,204,113,0.15), rgba(46,204,113,0.08));
+}
+.add-member-button-global:hover .plus {
+  transform: translateY(-2px) scale(1.08) rotate(-10deg);
+}
+
+.add-member-button-global:active {
+  transform: translateY(-1px) scale(0.99);
+}
+
+@media (max-width: 700px) {
+  .add-member-button-container-global {
+    top: 15px;
+    right: 80px; /* Adjust for smaller screens */
+  }
+  .add-member-button-global {
+    padding: 5px 8px;
+    font-size: 0.8rem;
+  }
+  .add-member-button-global .plus {
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    font-size: 11px;
+  }
 }
 
 /* Expenses container: header + scrollable list; the list grows to use space */

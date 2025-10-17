@@ -11,6 +11,7 @@ import ExpenseModal from './ExpenseModal';
 import ExpenseDetailModal from './ExpenseDetailModal';
 import ExpenseGraph from './ExpenseGraph';
 import PaymentModal from './PaymentModal';
+import AddMemberModal from './AddMemberModal'; // Import the new modal
 import { API_BASE_URL } from '../../config.js';
 
 export default function GroupPage() {
@@ -30,6 +31,7 @@ export default function GroupPage() {
   const [payments, setPayments] = useState([]);
   const [activities, setActivities] = useState([]);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [showAddMemberModal, setShowAddMemberModal] = useState(false); // State for AddMemberModal
 
   useEffect(() => {
     if (!roomId) return;
@@ -173,8 +175,20 @@ export default function GroupPage() {
   return (
     <div className="page-wrapper">
       <Aurora colorStops={['#3A29FF', '#FF94B4', '#FF3232']} blend={0.2} amplitude={0.5} speed={0.3} />
+      <Aurora colorStops={['#3A29FF', '#FF94B4', '#FF3232']} blend={0.2} amplitude={0.5} speed={0.3} />
       <Logo />
       <Navigation />
+      <div className="add-member-button-container-global"> {/* New container for the add member button */}
+        <button
+          type="button"
+          className="add-member-button-global"
+          onClick={() => setShowAddMemberModal(true)}
+          aria-label="Add member"
+        >
+          <span className="plus">＋</span>
+          <span className="label">Add Member</span>
+        </button>
+      </div>
 
       <div className="group-page-content-wrapper">
         <div className="group-details-section">
@@ -195,15 +209,17 @@ export default function GroupPage() {
 
                 <div className="group-header-right" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '8px' }}>
                   <span className="create-date">Created: {formatDateTime(groupDetails?.createTime)}</span>
-                  <button
-                    type="button"
-                    className="add-expense-button"
-                    onClick={() => setShowModal(true)}
-                    aria-label="Add expense"
-                  >
-                    <span className="plus">＋</span>
-                    <span className="label">Add Expense</span>
-                  </button>
+                  <div style={{ display: 'flex', gap: '10px' }}> {/* Container for buttons */}
+                    <button
+                      type="button"
+                      className="add-expense-button"
+                      onClick={() => setShowModal(true)}
+                      aria-label="Add expense"
+                    >
+                      <span className="plus">＋</span>
+                      <span className="label">Add Expense</span>
+                    </button>
+                  </div>
                 </div>
               </div>
 
@@ -299,10 +315,18 @@ export default function GroupPage() {
         <div className="graph-panel">
           <ExpenseGraph expenses={expenses} userId={user?.id} title="Expense Graph" sub="Per-expense shares (paid vs borrowed)" />
           <ExpenseGraph
-            expenses={payments.map((p) => ({ id: `p-${p.id}`, createTime: p.paymentTime, userShare: Number(p.amount) }))}
+            expenses={payments.map((p) => {
+              let share = 0;
+              if (Number(user?.id) === Number(p.payerId)) {
+                share = -Number(p.amount); // User paid, so it's an outflow (red)
+              } else if (Number(user?.id) === Number(p.payeeId)) {
+                share = Number(p.amount); // User received, so it's an inflow (green)
+              }
+              return { id: `p-${p.id}`, createTime: p.paymentTime, userShare: share };
+            })}
             userId={user?.id}
             title="Payment Graph"
-            sub="Payments over time"
+            sub="Payments over time (You paid: red, You received: green)"
           />
         </div>
       </div>
@@ -335,6 +359,21 @@ export default function GroupPage() {
         <ExpenseDetailModal
           expense={detailExpense}
           onClose={() => setDetailExpense(null)}
+        />
+      )}
+
+      {showAddMemberModal && (
+        <AddMemberModal
+          roomId={roomId}
+          onClose={() => setShowAddMemberModal(false)}
+          onMemberAdded={(updatedGroup) => {
+            setShowAddMemberModal(false);
+            setReloadKey((k) => k + 1); // Reload data to show new member
+            // Optionally update groupDetails if the response contains the latest group info
+            if (updatedGroup) {
+              setGroupDetails(updatedGroup);
+            }
+          }}
         />
       )}
     </div>
