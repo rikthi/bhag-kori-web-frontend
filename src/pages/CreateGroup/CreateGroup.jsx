@@ -7,6 +7,7 @@ import Navigation from '../../components/Navigation/Navigation';
 import Aurora from '../Aurora';
 import '../Auth.css'; // For shared styles like input-group, button, error-message
 import './CreateGroup.css';
+import {API_BASE_URL} from "../../config.js";
 
 const CreateGroup = () => {
     const [groupName, setGroupName] = useState('');
@@ -56,7 +57,7 @@ const CreateGroup = () => {
         };
 
         try {
-            const response = await axios.post('http://localhost:8080/api/v1/room/create/new', newGroup);
+            const response = await axios.post(`${API_BASE_URL}/api/v1/room/create/new`, newGroup);
             if (response.status === 200) {
                 setSuccessMessage('Group created successfully!');
                 setGroupName('');
