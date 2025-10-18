@@ -5,10 +5,14 @@ Bhag Kori is a web application designed to help you and your friends, family, or
 The name "Bhag Kori" (ভাগ করি) means "Let's Share" in Bengali, reflecting the app's core purpose of making sharing simple and transparent.
 
 # Link to in progress deployment: https://black-beach-0d69cae0f.3.azurestaticapps.net
-Note: The backend might need a bit of time to spool up. Please be patient.
+Note: The backend might need a bit of time to spool up. 
+
+Please be patient.
+
 For demonstration, you can use the credentials:
-Email : joe@example.com
-Password: 123
+
+* Email : joe@example.com
+* Password: 123
 
 ## Key Features
 
