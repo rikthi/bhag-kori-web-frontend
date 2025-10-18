@@ -16,20 +16,19 @@ body {
     padding: 0;
     color: #000000; /* Explicitly set body text to black */
     background-color: #1a1a2e; /* Darker background */
-    display: flex;
-    justify-content: center;
-    align-items: center;
     min-height: 100vh;
-    overflow: hidden; /* To contain the dot grid */
+    box-sizing: border-box;
 }
 
 .page-wrapper {
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
+    box-sizing: border-box;
+    padding: 16px;
 }
 
 .auth-container {
@@ -37,7 +36,7 @@ body {
     background-size: 200% 200%;
     animation: gradientAuthBox 10s ease infinite, floatIn 0.8s ease-out;
     backdrop-filter: blur(10px);
-    padding: 3rem;
+    padding: 2rem;
     border-radius: 20px;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -47,6 +46,15 @@ body {
     text-align: center;
     position: relative;
     z-index: 1;
+}
+
+/* Responsive adjustments for auth container */
+@media (max-width: 480px) {
+  .auth-container {
+    padding: 1rem;
+    border-radius: 12px;
+    max-width: 340px;
+  }
 }
 
 @keyframes gradientAuthBox {

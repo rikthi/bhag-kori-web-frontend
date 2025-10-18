@@ -1,1 +1,179 @@
-/* This file is intentionally left blank to prevent global style conflicts. */
+/* Global, mobile-first responsive base styles for the app */
+
+/* CSS variables and breakpoints */
+:root{
+  --max-width: 1200px;
+  --page-padding: 16px;
+  --gap-sm: 8px;
+  --gap-md: 16px;
+  --gap-lg: 24px;
+  --radius: 8px;
+  --color-text: #0f1720;
+  --color-bg: #ffffff;
+  --base-font-size: 16px;
+  --font-family: Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Box sizing and sensible defaults */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: var(--base-font-size); /* 16px base, adjust with media queries if needed */
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  color: var(--color-text);
+  background: var(--color-bg);
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+}
+
+/* Make images and svgs responsive by default */
+img, picture, svg, video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Links default behavior */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Utility container to center layout and provide horizontal padding */
+.container {
+  width: 100%;
+  padding-left: var(--page-padding);
+  padding-right: var(--page-padding);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Constrain content on larger screens */
+.container--constrained {
+  max-width: var(--max-width);
+}
+
+/* Simple responsive typography helpers */
+.h1 { font-size: 1.25rem; margin: 0 0 var(--gap-md) 0; font-weight: 700; }
+.h2 { font-size: 1rem; margin: 0 0 var(--gap-sm) 0; font-weight: 600; }
+
+/* Flex and grid helpers (mobile-first: stack vertically) */
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+}
+
+/* For common two-column layouts */
+.cols-2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--gap-md);
+}
+
+/* Columns (useful for splitting content) */
+.col {
+  width: 100%;
+}
+
+/* Alignment helpers */
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+
+/* Spacing helpers */
+.u-pt-sm { padding-top: var(--gap-sm); }
+.u-pt-md { padding-top: var(--gap-md); }
+.u-pb-md { padding-bottom: var(--gap-md); }
+.u-mt-sm { margin-top: var(--gap-sm); }
+
+/* Buttons and inputs should not overflow */
+button, input, select, textarea {
+  font: inherit;
+  max-width: 100%;
+}
+
+/* Make modals and overlays adapt */
+.modal {
+  width: 100%;
+  max-width: calc(100% - 2 * var(--page-padding));
+}
+
+/* Small-screen-specific tweaks are already the default.
+   Increase layout complexity at larger breakpoints below. */
+
+/* Medium screens (tablets and up) */
+@media (min-width: 640px) {
+  :root {
+    --page-padding: 20px;
+    --gap-md: 20px;
+  }
+
+  .row {
+    gap: var(--gap-md);
+  }
+
+  .cols-2 {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* Slightly larger base typography */
+  .h1 { font-size: 1.5rem; }
+  .h2 { font-size: 1.125rem; }
+}
+
+/* Large screens (desktops) */
+@media (min-width: 1024px) {
+  :root {
+    --page-padding: 24px;
+    --gap-md: 24px;
+  }
+
+  .container {
+    padding-left: var(--page-padding);
+    padding-right: var(--page-padding);
+  }
+
+  .container--constrained {
+    max-width: var(--max-width);
+  }
+
+  .cols-2 {
+    grid-template-columns: 2fr 1fr; /* common layout: main + sidebar */
+  }
+
+  .h1 { font-size: 1.75rem; }
+  .h2 { font-size: 1.25rem; }
+}
+
+/* Very large screens (optional) */
+@media (min-width: 1400px) {
+  :root { --max-width: 1400px; }
+}
+
+/* Accessibility: high-contrast focus outlines */
+:focus {
+  outline: 3px solid rgba(99, 102, 241, 0.35);
+  outline-offset: 2px;
+}
+
+/* Developer notes:
+   - Use .container + .container--constrained in top-level page components to ensure consistent paddings.
+   - Replace fixed widths/heights in component CSS with fluid units or remove them to let content flow.
+   - Prefer using .row and .cols-2 (or custom grid classes) so layouts stack naturally on small screens.
+   - For complex components (navigation, sidebars, forms), adjust their CSS to use percentage widths, flex, or grid
+     rather than absolute positioning.
+*/

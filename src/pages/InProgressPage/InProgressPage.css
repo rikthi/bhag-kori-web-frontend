@@ -7,7 +7,7 @@
   justify-content: center;
   width: 100%;
   max-width: 600px;
-  padding: 40px;
+  padding: 20px; /* reduced padding for small screens */
   box-sizing: border-box;
   position: relative;
   z-index: 1;
@@ -37,13 +37,15 @@
 
 /* Inherit from Auth.css or global styles if available */
 .page-wrapper {
-  /* Ensure page-wrapper styles are consistent */
-  width: 100vw;
-  height: 100vh;
+  /* Avoid using 100vw/100vh to prevent mobile browser overflow — use fluid sizing */
+  width: 100%;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
+  box-sizing: border-box;
+  padding: 24px 0; /* provide vertical breathing room on small screens */
 }
 
 /* Basic color variables from :root in Auth.css for consistency */

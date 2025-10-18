@@ -30,12 +30,12 @@
 }
 
 .create-group-form {
-    flex: 1;
-    min-width: 400px;
+    flex: 1 1 0%;
+    min-width: 0; /* allow shrinking on small screens */
     background: rgba(255, 255, 255, 0.05); /* Darker, transparent background */
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 20px;
-    padding: 3rem;
+    padding: 2.25rem; /* slightly reduced padding for mobile comfort */
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(8px);
     animation: floatIn 0.8s ease-out;

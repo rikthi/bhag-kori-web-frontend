@@ -16,7 +16,7 @@
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    width: 100vw; /* Span full viewport width */
+    width: 100%; /* Use 100% to avoid horizontal overflow from viewport width + padding */
     padding: 20px;
     box-sizing: border-box;
     position: relative;
@@ -84,9 +84,30 @@
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .homepage-content h1 {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
     }
     .features-grid {
         grid-template-columns: 1fr;
+    }
+    .feature-card {
+        padding: 1.25rem;
+    }
+    .homepage-content {
+        margin-top: 32px;
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+    .homepage-content h1 {
+        font-size: 1.8rem;
+    }
+    .feature-card h2 {
+        font-size: 1.25rem;
+    }
+    .feature-card p {
+        font-size: 0.95rem;
     }
 }

@@ -31,8 +31,8 @@
 
 /* Left: group details + expenses (flex column, expenses grows) */
 .group-details-section {
-  flex: 2;
-  min-width: 520px; /* larger so content doesn't look cramped */
+  flex: 2 1 0%;
+  min-width: 0; /* allow shrinking inside flex containers on small screens */
   background: var(--panel-bg);
   border: 1px solid var(--panel-border);
   border-radius: 14px;
@@ -45,8 +45,8 @@
 
 /* Right: summary, with vertical separator created via left border */
 .summary-section {
-  flex: 1;
-  min-width: 360px; /* slightly wider summary */
+  flex: 1 1 0%;
+  min-width: 0; /* allow shrinking on small screens */
   background: var(--panel-bg);
   border: 1px solid var(--panel-border);
   border-radius: 14px;
@@ -226,12 +226,16 @@
   .add-expense-button .plus, .add-member-button .plus, .add-member-button-global .plus { width: 16px; height: 16px; line-height: 16px; font-size: 11px; }
 }
 
-/* Add Member button container for global positioning */
+/* Add Member button container for global positioning
+   Positioned fixed so it stays aligned relative to the viewport and avoids overlapping the nav/logo.
+   On small screens it will move below the nav to prevent overlap. */
 .add-member-button-container-global {
-  position: absolute;
-  top: 20px;
-  right: 320px; /* Moved further left to avoid overlapping the navigation when it opens */
-  z-index: 1000;
+  position: fixed;
+  top: 16px;
+  right: 72px; /* sit to the left of the navigation (nav is ~36px + 16px margin) */
+  z-index: 900;
+  transition: right 180ms ease, top 180ms ease, transform 180ms ease;
+  pointer-events: auto;
 }
 
 /* Global Add Member button styling (reusing .add-member-button styles) */
@@ -290,8 +294,10 @@
 
 @media (max-width: 700px) {
   .add-member-button-container-global {
-    top: 15px;
-    right: 240px; /* Keep left of the nav on small screens */
+    position: fixed;
+    top: 72px; /* move below the nav/menu area on small screens */
+    right: 16px;
+    z-index: 900;
   }
   .add-member-button-global {
     padding: 5px 8px;
@@ -316,9 +322,10 @@
   background: rgba(255,255,255,0.02);
   border: 1px solid rgba(255,255,255,0.03);
   flex: 1; /* grow to fill available height */
-  min-height: 220px;
-  max-height: calc(100vh - 420px); /* keep panel visible and scrollable */
-  overflow: hidden;
+  min-height: 160px;
+  max-height: calc(100vh - 220px); /* keep panel visible and scrollable on small screens */
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .expenses-grid {
@@ -445,8 +452,9 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  max-height: calc(100vh - 420px); /* allow longer list but keep within viewport */
-  overflow: hidden;
+  max-height: calc(100vh - 220px); /* allow longer list but keep within viewport */
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .shares-list {
@@ -537,8 +545,9 @@
 
 /* Graph panel (right column) */
 .graph-panel {
-  width: 420px;
-  min-width: 360px;
+  max-width: 420px;
+  width: 100%;
+  min-width: 0;
   align-self: stretch;
   display: flex;
   flex-direction: column;

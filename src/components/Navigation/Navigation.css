@@ -1,13 +1,16 @@
 .navigation-wrapper {
-    position: absolute;
-    top: 20px;
-    right: 20px;
+    position: fixed;
+    top: 16px;
+    right: 16px;
     z-index: 100;
+    display: flex;
+    align-items: center;
 }
 
 .menu-icon {
-    width: 30px;
-    height: 20px;
+    --nav-size: 36px;
+    width: var(--nav-size);
+    height: calc(var(--nav-size) * 0.66);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -38,16 +41,21 @@
 .nav-menu {
     position: fixed;
     top: 0;
-    right: -300px; /* Hidden by default */
-    width: 250px;
+    right: 0;
+    transform: translateX(100%); /* Hidden by default (off-canvas) */
+    width: min(320px, 85vw);
+    max-width: 320px;
     height: 100%;
     background-color: rgba(18, 17, 35, 0.95); /* Darker background */
     backdrop-filter: blur(10px);
-    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3); /* Stronger shadow */
-    transition: right 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    padding-top: 80px;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+    padding-top: 72px;
     box-sizing: border-box;
-    border-left: 1px solid rgba(255, 255, 255, 0.05); /* Subtle border */
+    border-left: 1px solid rgba(255, 255, 255, 0.05);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 24px;
 }
 
 /* Close button shown inside the nav when open — positioned top-left */
@@ -85,7 +93,7 @@
 }
 
 .nav-menu.open {
-    right: 0; /* Slide in */
+    transform: translateX(0); /* Slide in */
 }
 
 .nav-menu ul {
