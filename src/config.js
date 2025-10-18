@@ -1,1 +1,1 @@
-export const API_BASE_URL = 'http://localhost:8080';
+export const API_BASE_URL = "bhag-kori-web-afh8etd3d5geb0ae.canadacentral-01.azurewebsites.net";
