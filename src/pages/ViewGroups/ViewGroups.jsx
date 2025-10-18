@@ -72,7 +72,7 @@ const ViewGroups = () => {
         return (
             <div className="page-wrapper">
                 <Aurora
-                    colorStops={["#3A29FF", "#FF94B4", "#FF3232"]}
+                    colorStops={["#B19EEF", "#8A6EDB", "#4A2B86"]}
                     blend={0.2}
                     amplitude={0.5}
                     speed={0.3}
@@ -90,7 +90,7 @@ const ViewGroups = () => {
         return (
             <div className="page-wrapper">
                 <Aurora
-                    colorStops={["#3A29FF", "#FF94B4", "#FF3232"]}
+                    colorStops={["#B19EEF", "#8A6EDB", "#4A2B86"]}
                     blend={0.2}
                     amplitude={0.5}
                     speed={0.3}
@@ -107,7 +107,7 @@ const ViewGroups = () => {
     return (
         <div className="page-wrapper">
             <Aurora
-                colorStops={["#3A29FF", "#FF94B4", "#FF3232"]}
+                colorStops={["#B19EEF", "#8A6EDB", "#4A2B86"]}
                 blend={0.2}
                 amplitude={0.5}
                 speed={0.3}
@@ -129,21 +129,23 @@ const ViewGroups = () => {
                 {filteredGroups.length === 0 ? (
                     <p className="no-groups-message">No groups found.</p>
                 ) : (
-                    <div className="groups-grid">
-                        {filteredGroups.map((group) => (
-                            <div key={group.id} className="group-card" onClick={() => handleGroupClick(group.id)}>
-                                <h3>{group.name}</h3>
-                                <p className="group-description">{group.description}</p>
-                                {group.totalAmount !== null && (
-                                    <p className={`group-total ${group.totalAmount < 0 ? 'owe' : 'get'}`}>
-                                        {group.totalAmount < 0 ? `You owe: $${Math.abs(group.totalAmount).toFixed(2)}` : `You will get: $${group.totalAmount.toFixed(2)}`}
-                                    </p>
-                                )}
-                                {group.totalAmount === null && (
-                                    <p className="group-total-unavailable">Total amount unavailable.</p>
-                                )}
-                            </div>
-                        ))}
+                    <div className="scrollable-groups-container"> {/* New scrollable container */}
+                        <div className="groups-grid">
+                            {filteredGroups.map((group) => (
+                                <div key={group.id} className="group-card" onClick={() => handleGroupClick(group.id)}>
+                                    <h3>{group.name}</h3>
+                                    <p className="group-description">{group.description}</p>
+                                    {group.totalAmount !== null && (
+                                        <p className={`group-total ${group.totalAmount < 0 ? 'owe' : 'get'}`}>
+                                            {group.totalAmount < 0 ? `You owe: $${Math.abs(group.totalAmount).toFixed(2)}` : `You will get: $${group.totalAmount.toFixed(2)}`}
+                                        </p>
+                                    )}
+                                    {group.totalAmount === null && (
+                                        <p className="group-total-unavailable">Total amount unavailable.</p>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 )}
             </div>

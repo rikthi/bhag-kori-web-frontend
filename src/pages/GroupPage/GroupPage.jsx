@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom'; // Add useNavigate import
 import axios from 'axios';
 import { UserContext } from '../../context/UserContext';
 import Logo from '../../components/Logo/Logo';
@@ -12,6 +12,7 @@ import ExpenseDetailModal from './ExpenseDetailModal';
 import ExpenseGraph from './ExpenseGraph';
 import PaymentModal from './PaymentModal';
 import AddMemberModal from './AddMemberModal'; // Import the new modal
+import ConfirmationModal from '../../components/ConfirmationModal/ConfirmationModal'; // Import ConfirmationModal
 import { API_BASE_URL } from '../../config.js';
 
 export default function GroupPage() {
@@ -32,6 +33,9 @@ export default function GroupPage() {
   const [activities, setActivities] = useState([]);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [showAddMemberModal, setShowAddMemberModal] = useState(false); // State for AddMemberModal
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false); // State for delete confirmation modal
+  const [showLeaveConfirm, setShowLeaveConfirm] = useState(false); // State for leave confirmation modal
+  const [submittingAction, setSubmittingAction] = useState(false); // State to disable buttons during API call
 
   useEffect(() => {
     if (!roomId) return;
@@ -172,13 +176,44 @@ export default function GroupPage() {
     return `You paid: $${amount.toFixed(2)}`;
   };
 
+  const navigate = useNavigate(); // Initialize useNavigate
+
+  const handleDeleteGroup = async () => {
+    setSubmittingAction(true);
+    try {
+      await axios.delete(`${API_BASE_URL}/api/v1/room/delete/${roomId}`);
+      navigate('/view-groups'); // Redirect to view groups page
+    } catch (e) {
+      console.error('Failed to delete group', e);
+      setError('Failed to delete group. Please try again.');
+    } finally {
+      setSubmittingAction(false);
+      setShowDeleteConfirm(false);
+    }
+  };
+
+  const handleLeaveGroup = async () => {
+    setSubmittingAction(true);
+    try {
+      await axios.put(`${API_BASE_URL}/api/v1/room/${roomId}/remove/user/${user.id}`);
+      navigate('/view-groups'); // Redirect to view groups page
+    } catch (e) {
+      console.error('Failed to leave group', e);
+      setError('Failed to leave group. Please try again.');
+    } finally {
+      setSubmittingAction(false);
+      setShowLeaveConfirm(false);
+    }
+  };
+
+  const isCreator = groupDetails && user && Number(user.id) === Number(groupDetails.creatorId);
+
   return (
     <div className="page-wrapper">
-      <Aurora colorStops={['#3A29FF', '#FF94B4', '#FF3232']} blend={0.2} amplitude={0.5} speed={0.3} />
-      <Aurora colorStops={['#3A29FF', '#FF94B4', '#FF3232']} blend={0.2} amplitude={0.5} speed={0.3} />
+      <Aurora colorStops={['#B19EEF', '#8A6EDB', '#4A2B86']} blend={0.2} amplitude={0.5} speed={0.3} />
       <Logo />
       <Navigation />
-      <div className="add-member-button-container-global"> {/* New container for the add member button */}
+      <div className="add-member-button-container-global">
         <button
           type="button"
           className="add-member-button-global"
@@ -198,7 +233,6 @@ export default function GroupPage() {
             <h2 className="page-title error-message">{error}</h2>
           ) : (
             <>
-
               <div className="group-header">
                 <div className="group-header-left">
                   <h2 className="group-name">{groupDetails?.name || 'Group'}</h2>
@@ -209,7 +243,7 @@ export default function GroupPage() {
 
                 <div className="group-header-right" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '8px' }}>
                   <span className="create-date">Created: {formatDateTime(groupDetails?.createTime)}</span>
-                  <div style={{ display: 'flex', gap: '10px' }}> {/* Container for buttons */}
+                  <div style={{ display: 'flex', gap: '10px' }}>
                     <button
                       type="button"
                       className="add-expense-button"
@@ -331,6 +365,33 @@ export default function GroupPage() {
         </div>
       </div>
 
+      {/* Delete/Leave Group Button */}
+      {groupDetails && (
+        <div className="group-action-button-container">
+          {isCreator ? (
+            <button
+              type="button"
+              className="delete-group-button"
+              onClick={() => setShowDeleteConfirm(true)}
+              aria-label="Delete group"
+              disabled={submittingAction}
+            >
+              Delete Group
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="leave-group-button"
+              onClick={() => setShowLeaveConfirm(true)}
+              aria-label="Leave group"
+              disabled={submittingAction}
+            >
+              Leave Group
+            </button>
+          )}
+        </div>
+      )}
+
       {showModal && (
         <ExpenseModal
           roomId={roomId}
@@ -374,6 +435,32 @@ export default function GroupPage() {
               setGroupDetails(updatedGroup);
             }
           }}
+        />
+      )}
+
+      {showDeleteConfirm && (
+        <ConfirmationModal
+          title="Confirm Delete Group"
+          message={`Are you sure you want to delete "${groupDetails?.name}"? This action cannot be undone.`}
+          confirmText="Delete"
+          cancelText="Cancel"
+          onConfirm={handleDeleteGroup}
+          onCancel={() => setShowDeleteConfirm(false)}
+          isDestructive={true}
+          submitting={submittingAction}
+        />
+      )}
+
+      {showLeaveConfirm && (
+        <ConfirmationModal
+          title="Confirm Leave Group"
+          message={`Are you sure you want to leave "${groupDetails?.name}"? You will no longer be a member of this group.`}
+          confirmText="Leave"
+          cancelText="Cancel"
+          onConfirm={handleLeaveGroup}
+          onCancel={() => setShowLeaveConfirm(false)}
+          isDestructive={false}
+          submitting={submittingAction}
         />
       )}
     </div>

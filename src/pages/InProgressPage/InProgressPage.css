@@ -1,0 +1,67 @@
+/* In Progress Page Styling */
+
+.in-progress-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 600px;
+  padding: 40px;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+  color: var(--text-color-light); /* Assuming a dark theme */
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+  text-align: center;
+}
+
+.in-progress-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.in-progress-message {
+  font-size: 1.1rem;
+  color: var(--light-text-color-subtle);
+  line-height: 1.6;
+  max-width: 400px;
+}
+
+/* Inherit from Auth.css or global styles if available */
+.page-wrapper {
+  /* Ensure page-wrapper styles are consistent */
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+/* Basic color variables from :root in Auth.css for consistency */
+:root {
+    --primary-color: #8e82ff;
+    --text-color-light: #ffffff;
+    --light-text-color-subtle: #e0e0e0;
+}
+
+@media (max-width: 768px) {
+  .in-progress-container {
+    padding: 20px;
+    max-width: 90%;
+  }
+  .in-progress-title {
+    font-size: 2rem;
+  }
+  .in-progress-message {
+    font-size: 1rem;
+  }
+}

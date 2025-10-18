@@ -11,9 +11,9 @@ const Homepage = () => {
     const features = [
         { title: 'Create a Group', description: 'Start a new group for your activities.', path: '/create-group' },
         { title: 'View Groups', description: 'See all the groups you are a part of.', path: '/view-groups' },
-        { title: 'Request Payment', description: 'Request payment from your friends.', path: '#' },
-        { title: 'View Activity', description: 'Check your recent activities.', path: '#' },
-        { title: 'Friends', description: 'Manage your friends list.', path: '#' }
+        { title: 'Request Payment', description: 'Request payment from your friends.', path: '/in-progress' },
+        { title: 'View Activity', description: 'Check your recent activities.', path: '/in-progress' },
+        { title: 'Friends', description: 'Manage your friends list.', path: '/in-progress' }
     ];
 
     const handleCardClick = (path) => {
@@ -39,7 +39,7 @@ const Homepage = () => {
                 </div>
             </div>
             <Aurora
-                colorStops={["#3A29FF", "#FF94B4", "#FF3232"]}
+                colorStops={["#B19EEF", "#8A6EDB", "#4A2B86"]}
                 blend={0.2}
                 amplitude={0.5}
                 speed={0.3}

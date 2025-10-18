@@ -4,9 +4,10 @@ import axios from 'axios';
 import { UserContext } from '../../context/UserContext';
 import '../Auth.css';
 import './Login.css';
-import DotGrid from '../DotGrid';
+import PixelBlast from '../../components/PixelBlast/PixelBlast';
 import Logo from '../../components/Logo/Logo';
 import { Link } from 'react-router-dom';
+import { API_BASE_URL } from '../../config';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -19,7 +20,7 @@ const Login = () => {
         e.preventDefault();
         setError(null); // Reset error on new submission
         try {
-            const response = await axios.post('http://localhost:8080/api/v1/user/login', {
+            const response = await axios.post(`${API_BASE_URL}/api/v1/user/login`, {
                 email,
                 password
             });
@@ -37,17 +38,25 @@ const Login = () => {
 
     return (
         <div className="page-wrapper">
-            <Logo />
-            <DotGrid
-                dotSize={2}
-                gap={20}
-                baseColor="#e0e0e0"
-                activeColor="#ffffff"
-                proximity={100}
-                shockRadius={250}
-                shockStrength={5}
-                resistance={750}
-                returnDuration={1.5}
+            <PixelBlast
+                variant="circle"
+                pixelSize={6}
+                color="#B19EEF"
+                patternScale={3}
+                patternDensity={1.2}
+                pixelSizeJitter={0.5}
+                enableRipples
+                rippleSpeed={0.4}
+                rippleThickness={0.12}
+                rippleIntensityScale={1.5}
+                liquid
+                liquidStrength={0.12}
+                liquidRadius={1.2}
+                liquidWobbleSpeed={5}
+                speed={0.6}
+                edgeFade={0.25}
+                transparent
+                style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
             />
             <div className="auth-container">
                 <form className="auth-form" onSubmit={handleSubmit}>

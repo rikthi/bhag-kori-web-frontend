@@ -7,6 +7,7 @@ import Homepage from './pages/Homepage/Homepage';
 import CreateGroup from './pages/CreateGroup/CreateGroup';
 import ViewGroups from './pages/ViewGroups/ViewGroups';
 import GroupPage from './pages/GroupPage/GroupPage';
+import InProgressPage from './pages/InProgressPage/InProgressPage'; // Import InProgressPage
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
                 <Route path="/create-group" element={<CreateGroup />} />
                 <Route path="/view-groups" element={<ViewGroups />} />
                 <Route path="/group/:roomId" element={<GroupPage />} />
+                <Route path="/in-progress" element={<InProgressPage />} /> {/* New route for in-progress features */}
             </Routes>
         </Router>
     );

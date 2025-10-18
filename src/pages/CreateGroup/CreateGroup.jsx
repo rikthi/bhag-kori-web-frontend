@@ -16,7 +16,6 @@ const CreateGroup = () => {
     const [successMessage, setSuccessMessage] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
     const { user } = useContext(UserContext);
-    const navigate = useNavigate();
 
     const handleAddMember = () => {
         if (memberInput.trim() && !members.includes(memberInput.trim())) {
@@ -77,7 +76,7 @@ const CreateGroup = () => {
     return (
         <div className="page-wrapper">
             <Aurora
-                colorStops={["#3A29FF", "#FF94B4", "#FF3232"]}
+                colorStops={["#B19EEF", "#8A6EDB", "#4A2B86"]}
                 blend={0.2}
                 amplitude={0.5}
                 speed={0.3}

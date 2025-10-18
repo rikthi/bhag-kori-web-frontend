@@ -41,12 +41,47 @@
     right: -300px; /* Hidden by default */
     width: 250px;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.95);
+    background-color: rgba(18, 17, 35, 0.95); /* Darker background */
     backdrop-filter: blur(10px);
-    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3); /* Stronger shadow */
     transition: right 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding-top: 80px;
     box-sizing: border-box;
+    border-left: 1px solid rgba(255, 255, 255, 0.05); /* Subtle border */
+}
+
+/* Close button shown inside the nav when open — positioned top-left */
+.nav-close-btn {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    border: none;
+    background: rgba(255,255,255,0.06);
+    color: #f5f5ff;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.12s;
+    z-index: 110;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+
+.nav-close-btn:hover {
+    background: rgba(255,255,255,0.09);
+    transform: translateY(-2px);
+}
+
+.nav-close-btn:active {
+    transform: translateY(0);
+}
+
+.nav-menu.open .nav-close-btn {
+    display: inline-flex;
 }
 
 .nav-menu.open {
@@ -61,7 +96,7 @@
 
 .nav-menu li {
     padding: 15px 25px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08); /* Darker border */
 }
 
 .nav-menu li:last-child {
@@ -70,7 +105,7 @@
 
 .nav-menu a {
     text-decoration: none;
-    color: #000000; /* Explicitly set to black */
+    color: #f5f5ff; /* Light text color */
     font-weight: 600;
     font-size: 1.1rem;
     display: block;
@@ -78,6 +113,37 @@
 }
 
 .nav-menu a:hover {
-    color: #8e82ff; /* Explicitly set to primary color */
+    color: var(--primary-color); /* Use primary color from root */
     transform: translateX(5px);
+}
+
+.nav-menu-divider {
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.1);
+    margin: 10px 25px;
+}
+
+.logout-button {
+    width: calc(100% - 50px); /* Adjust width for padding */
+    margin: 15px 25px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #e74c3c, #ff6347); /* Red gradient for logout */
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(231, 76, 60, 0.3);
+}
+
+.logout-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(231, 76, 60, 0.4);
+}
+
+.logout-button:active {
+    transform: translateY(0);
+    box-shadow: none;
 }
