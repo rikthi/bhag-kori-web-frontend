@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="64" height="64" role="img" aria-label="BK logo">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8e82ff" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#a29bfe" stop-opacity="1"/>
+    </linearGradient>
+  </defs>
+
+  <!-- background rounded square -->
+  <rect x="10" y="10" width="180" height="180" rx="28" ry="28" fill="#ffffff"/>
+
+  <!-- stroke square using gradient (matches Logo.jsx shape) -->
+  <path d="M50 50 L150 50 L150 150 L50 150 Z"
+        fill="none"
+        stroke="url(#grad1)"
+        stroke-width="12"
+        stroke-linejoin="round"/>
+
+  <!-- text -->
+  <text x="100" y="118" text-anchor="middle" dominant-baseline="middle"
+        font-family="Helvetica, Arial, sans-serif" font-size="64" fill="#4b3fbf" font-weight="700">
+    BK
+  </text>
+</svg>
