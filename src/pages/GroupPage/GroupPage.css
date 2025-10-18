@@ -230,7 +230,7 @@
 .add-member-button-container-global {
   position: absolute;
   top: 20px;
-  right: 100px; /* Position to the left of the navigation button, with good distance */
+  right: 320px; /* Moved further left to avoid overlapping the navigation when it opens */
   z-index: 1000;
 }
 
@@ -291,7 +291,7 @@
 @media (max-width: 700px) {
   .add-member-button-container-global {
     top: 15px;
-    right: 80px; /* Adjust for smaller screens */
+    right: 240px; /* Keep left of the nav on small screens */
   }
   .add-member-button-global {
     padding: 5px 8px;
