@@ -37,6 +37,6 @@ For demonstration, you can use the credentials:
 ## Tech Stack
 
 * **Backend:** Java, Spring Boot, Spring Security, JPA (Hibernate)
-* **Database:** MySQL / PostgreSQL
-* **Frontend:** React.js *(Adjust if you use a different framework)*
-* **Deployment:** Microsoft Azure App Service
+* **Database:** MySQL
+* **Frontend:** React.js
+* **Deployment:** Microsoft Azure App Service, Microsoft Azure MySQL Database and Microsoft Azure Static Web App
