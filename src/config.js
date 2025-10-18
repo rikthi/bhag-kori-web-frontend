@@ -1,1 +1,1 @@
-export const API_BASE_URL = "bhag-kori-web-afh8etd3d5geb0ae.canadacentral-01.azurewebsites.net";
+export const API_BASE_URL = "https://bhag-kori-web-afh8etd3d5geb0ae.canadacentral-01.azurewebsites.net";
