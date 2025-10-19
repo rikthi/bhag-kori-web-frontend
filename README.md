@@ -32,7 +32,7 @@ For demonstration, you can use the credentials:
 
 ## Screenshots
 
-[!Alt text](https://github.com/user-attachments/assets/efc9a0e4-469c-46d3-bad4-e81cbbd34cdb)
+![Alt text](https://github.com/user-attachments/assets/efc9a0e4-469c-46d3-bad4-e81cbbd34cdb)
 
 ## Tech Stack
 
