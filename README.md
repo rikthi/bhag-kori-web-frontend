@@ -11,7 +11,7 @@ Please be patient.
 
 For demonstration, you can use the credentials:
 
-* Email : joe@example.com
+* Email : bob@example.com
 * Password: 123
 
 ## Key Features
